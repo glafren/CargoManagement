@@ -187,6 +187,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CargoManagement.Data\CargoManagement.Data.csproj" />
+    <ProjectReference Include="..\CargoManagement.Repository\CargoManagement.Repository.csproj" />
   </ItemGroup>
 
 </Project>

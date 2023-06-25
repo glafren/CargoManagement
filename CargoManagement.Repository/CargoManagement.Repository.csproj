@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CargoManagement.Data\CargoManagement.Data.csproj" />
+    <ProjectReference Include="..\CargoManagement.Model\CargoManagement.Model.csproj" />
+  </ItemGroup>
+
 </Project>

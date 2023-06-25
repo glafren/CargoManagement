@@ -1,4 +1,6 @@
 using CargoManagement.Data;
+using CargoManagement.Repository.Shared.Abstract;
+using CargoManagement.Repository.Shared.Concrete;
 using Microsoft.EntityFrameworkCore;
 
 namespace CargoManagement.Web
@@ -23,6 +25,7 @@ namespace CargoManagement.Web
 			}
 
 			builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Cargo")));
+			builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
