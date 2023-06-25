@@ -15,7 +15,9 @@ namespace CargoManagement.Repository.Shared.Abstract
 
 		void Add(T entity);
 		void Update(T entity);
-		void Remove(T entity);
+		void Remove(Guid id);
+
+		T GetById(Guid id);
 
 		void AddRange(IEnumerable<T> entities);
 		void UpdateRange(IEnumerable<T> entities);

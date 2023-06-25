@@ -47,11 +47,16 @@ namespace CargoManagement.Repository.Shared.Concrete
 			return GetAll().FirstOrDefault(filter);
 		}
 
-		public void Remove(T entity)
+		public void Remove(Guid id)
 		{
-			entity.isDeleted = true;
-			entity.DateModified = DateTime.Now;
-			dbSet.Update(entity);
+			T Entity = GetFirstOrDefault(t => t.Id == id);
+			Entity.isDeleted = true;
+			dbSet.Update(Entity);
+		}
+
+		public T GetById(Guid id)
+		{
+			return dbSet.Find(id);
 		}
 
 		public void RemoveRange(IEnumerable<T> entities)

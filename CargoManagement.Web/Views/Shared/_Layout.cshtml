@@ -4,7 +4,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Kütüphane | .NET </title>
+    <title>Kargo | .NET </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -152,12 +152,13 @@
                             </a>
                         </li>
                         <li>
+                           
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="uil-window-section"></i>
-                                <span>Ürün Yönetimi</span>
-                            </a>
+                                <i class="uil-window-section"></i><span>Yönetim</span></a>
                             <ul class="sub-menu" aria-expanded="true">
-                                <li><a asp-controller="Book" asp-action="Index">Kitaplar</a></li>
+                                <li><a asp-controller="User" asp-action="Index">Kullanıcı Yönetimi</a></li>
+                                <li><a asp-controller="Branch" asp-action="Index">Şube Yönetimi</a></li>
+                                <li><a asp-controller="AuthorizationRole" asp-action="Index">Yetki Yönetimi</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -165,10 +166,6 @@
                 <!-- Sidebar -->
             </div>
         </div>
-        <!-- Left Sidebar End -->
-        <!-- ============================================================== -->
-        <!-- Start right Content here -->
-        <!-- ============================================================== -->
         <div class="main-content">
 
             <div class="page-content">
@@ -210,10 +207,10 @@
     <script src="~/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
     <!-- toastr plugin -->
-    <script src="assets/libs/toastr/build/toastr.min.js"></script>
+    <script src="~/assets/libs/toastr/build/toastr.min.js"></script>
 
     <!-- toastr init -->
-    <script src="assets/js/pages/toastr.init.js"></script>
+    <script src="/assets/js/pages/toastr.init.js"></script>
     <script>
         toastr.options = {
             "closeButton": true,

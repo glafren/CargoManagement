@@ -1,0 +1,78 @@
+﻿<div>
+	<div class="card">
+		<div class="card-header  text-white bg-success bg-gradient">
+			<span class="fs-4">Şube Listesi</span>
+			<a href="#" id="btnEkle" class="btn btn-warning ms-2">Şube Ekle</a>
+		</div>
+		<div class="card-body" style="overflow:auto">
+			<table id="tblBranches" class="table table-bordered table-striped" style="width:100%">
+			</table>
+		</div>
+	</div>
+</div>
+
+@section Scripts{
+	<script>
+		var DataTable;
+
+		$(document).ready(function(){
+			fillDataTable();
+		})
+
+		function fillDataTable(){
+			DataTable = $('#tblBranches').DataTable({
+				ajax:'/Branch/GetAll',
+				columns: [
+					{ data: 'id', title:'Id', width:'350px' },
+					{ data: 'name', title:'Şube Adı' },
+					{ data: 'id', title:'İşlemler', render: function(data){
+							return `
+									<a href="#" onclick="deleteBranch('${data}')" class="btn btn-danger">Sil</a>
+									<a href="#" onclick="editBranch('${data}')" class="btn btn-primary">Düzenle</a>
+							`;
+						} 
+					}
+				]
+			})
+		}
+
+
+		function deleteBranch(branchId){
+			Swal.fire({
+				title: 'Silmek istediğinize emin misiniz?',
+				text: "Şube Silinecek",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3095d6',
+				cancelButtonColor: '#d37',
+				confirmButtonText: 'Sil!'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					$.ajax({
+						type: 'Post',
+						url: '/Branch/Remove',
+						data: {
+							id: branchId
+						},
+						success: function () {
+							Swal.fire(
+								'Başarılı!',
+								'Şube silindi.',
+								'success'
+							);
+							DataTable.ajax.reload();
+						},
+						error: function () {
+							Swal.fire({
+								icon: 'error',
+								title: 'Silme işlemi başarısız!',
+								text: 'Bir şeyler yanlış gitti!'
+							});
+						}
+					});
+				}
+			});
+		}
+
+	</script>
+}
