@@ -5,6 +5,12 @@ VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoManagement.Web", "CargoManagement.Web\CargoManagement.Web.csproj", "{AFE60A48-8845-4C4D-A28D-CAB8B4B4CBE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoManagement.Model", "CargoManagement.Model\CargoManagement.Model.csproj", "{D12C5C71-C021-4BDE-A370-8B3914745136}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoManagement.Data", "CargoManagement.Data\CargoManagement.Data.csproj", "{9173EC3F-AFC0-4CBE-91EC-DB955FADB6C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoManagement.Repository", "CargoManagement.Repository\CargoManagement.Repository.csproj", "{3C9D0168-44A4-49C2-BE14-4B19AF5D444C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{AFE60A48-8845-4C4D-A28D-CAB8B4B4CBE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFE60A48-8845-4C4D-A28D-CAB8B4B4CBE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFE60A48-8845-4C4D-A28D-CAB8B4B4CBE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D12C5C71-C021-4BDE-A370-8B3914745136}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D12C5C71-C021-4BDE-A370-8B3914745136}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D12C5C71-C021-4BDE-A370-8B3914745136}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D12C5C71-C021-4BDE-A370-8B3914745136}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9173EC3F-AFC0-4CBE-91EC-DB955FADB6C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9173EC3F-AFC0-4CBE-91EC-DB955FADB6C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9173EC3F-AFC0-4CBE-91EC-DB955FADB6C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9173EC3F-AFC0-4CBE-91EC-DB955FADB6C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C9D0168-44A4-49C2-BE14-4B19AF5D444C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C9D0168-44A4-49C2-BE14-4B19AF5D444C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C9D0168-44A4-49C2-BE14-4B19AF5D444C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C9D0168-44A4-49C2-BE14-4B19AF5D444C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
