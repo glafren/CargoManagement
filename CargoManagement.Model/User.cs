@@ -10,7 +10,7 @@ namespace CargoManagement.Model
 	{
 		public string UserName { get; set; }
 		public string Password { get; set; }
-		public Guid AuthorizationLevelId { get; set; }
+		public Guid AuthorizationRoleId { get; set; }
 		public virtual AuthorizationRole AuthorizationRole { get; set; }
 	}
 }
