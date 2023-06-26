@@ -20,7 +20,7 @@ namespace CargoManagement.Model
 		public string? RecipientSurname { get; set; }
 		public string? RecipientPhone { get; set; }
 		public string? RecipientEmail { get; set; }
-		public Guid? DepartureBranchId { get; set; }
+		public Guid? BranchId { get; set; }
 		public virtual Branch Branch { get; set; }
 	}
 }

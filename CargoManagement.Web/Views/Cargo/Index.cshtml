@@ -1,0 +1,40 @@
+﻿<div>
+	<div class="card">
+		<div class="card-header  text-white bg-success bg-gradient">
+			<span class="fs-4"> Kargolar </span>
+			<a href="#" id="btnEkle" class="btn btn-warning ms-2">Şube Ekle</a>
+		</div>
+		<div class="card-body" style="overflow:auto">
+			<table id="tblCargos" class="table table-bordered table-striped" style="width:100%">
+			</table>
+		</div>
+	</div>
+</div>
+
+@section Scripts{
+	<script>
+		var DataTable;
+
+		$(document).ready(function(){
+			fillDataTable();
+		})
+
+
+		function fillDataTable(){
+			DataTable = $('#tblCargos').DataTable({
+				ajax:'/Cargo/GetAll',
+				columns: [
+					{data:'id',title:'Id'},
+					{data:'trackingNumber', title:'Takip Numarası'},
+					{data:'senderName', title:'Gönderen Adı'},
+					{data: 'recipientName', title:'Alıcı Adı'},
+					{data: 'deliveryAddress', title:'Gönderilen Adres'},
+					{data: 'id', title:'İşlemler', render: function(data){
+							return `<a onclick="showMore('${data}')" class="btn btn-primary"><i class="fas fa-indent"></i></a>`
+						}
+					}
+				]
+			})
+		}
+	</script>
+}
