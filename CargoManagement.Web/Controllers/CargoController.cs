@@ -21,5 +21,11 @@ namespace CargoManagement.Web.Controllers
 		{
 			return Json(new { data = unitOfWork.Cargos.GetAll() });
 		}
+
+		[HttpPost]
+		public IActionResult GetById(Guid id)
+		{
+			return Json( unitOfWork.Cargos.GetFirstOrDefault(u=> u.Id==id) );
+		}
 	}
 }

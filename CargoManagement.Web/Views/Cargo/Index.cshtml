@@ -89,7 +89,7 @@
 								</tr>
 								<tr>
 									<th scope="row">Çıkış Tarihi</th>
-									<td><input type="date" readonly id="txtCargoExitDate" class="form-control-plaintext" id="ExitDate"></td>
+									<td><input type="text" readonly id="txtCargoExitDate" class="form-control-plaintext" id="ExitDate"></td>
 								</tr>
 								<tr>
 									<th scope="row">Teslimat Adresi</th>
@@ -142,6 +142,30 @@
 
 		function showMore(cargoId){
 			$('#modal').modal('show');
+			console.log(cargoId)
+			$.ajax({
+				type:'Post',
+				url:'/Cargo/GetById',
+				data: { id : cargoId},
+				success: function(res){
+					console.log(res);
+					$('#txtSenderName').val(res.senderName);
+					$('#txtSenderSurname').val(res.senderSurname);
+					$('#txtSenderEmail').val(res.senderEmail);
+					$('#txtSenderPhone').val(res.senderPhone);
+
+					$('#txtRecipientName').val(res.recipientName);
+					$('#txtRecipientSurname').val(res.recipientSurname);
+					$('#txtRecipientEmail').val(res.recipientEmail);
+					$('#txtRecipientPhone').val(res.recipientPhone);
+
+					$('#txtCargoTrackingNumber').val(res.trackingNumber);
+					$('#txtCargoState').val(res.status);
+					$('#txtCargoExitDate').val(res.exitDate);
+					$('#txtCargoDeliveryAddress').val(res.deliveryAddress);
+					$('#txtCargoBranch').val(res.branchId);
+				}
+			})
 		}
 
 
