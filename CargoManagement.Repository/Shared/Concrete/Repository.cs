@@ -54,7 +54,7 @@ namespace CargoManagement.Repository.Shared.Concrete
 			dbSet.Update(Entity);
 		}
 
-		public virtual T GetById(Guid id)
+		public T GetById(Guid id)
 		{
 			return dbSet.Find(id);
 		}
