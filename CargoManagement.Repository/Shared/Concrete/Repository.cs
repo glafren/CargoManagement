@@ -44,7 +44,7 @@ namespace CargoManagement.Repository.Shared.Concrete
 
 		public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
 		{
-			return GetAll().FirstOrDefault(filter);
+			return dbSet.Where(t => t.isDeleted == false).AsNoTracking().FirstOrDefault(filter);
 		}
 
 		public void Remove(Guid id)
@@ -54,7 +54,7 @@ namespace CargoManagement.Repository.Shared.Concrete
 			dbSet.Update(Entity);
 		}
 
-		public T GetById(Guid id)
+		public virtual T GetById(Guid id)
 		{
 			return dbSet.Find(id);
 		}

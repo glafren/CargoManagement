@@ -1,6 +1,7 @@
 ﻿using CargoManagement.Repository.Shared.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
 
 namespace CargoManagement.Web.Controllers
 {
@@ -25,7 +26,7 @@ namespace CargoManagement.Web.Controllers
 		[HttpPost]
 		public IActionResult GetById(Guid id)
 		{
-			return Json( unitOfWork.Cargos.GetFirstOrDefault(u=> u.Id==id) );
+			return Json(unitOfWork.Cargos.GetById(id));
 		}
 	}
 }
