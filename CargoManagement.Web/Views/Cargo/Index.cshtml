@@ -144,25 +144,25 @@
 			console.log(cargoId)
 			$.ajax({
 				type:'Post',
-				url:'/Cargo/GetById',
+				url:'/Cargo/GetCargo',
 				data: { id : cargoId},
 				success: function(res){
 					console.log(res);
-					$('#txtSenderName').val(res.senderName);
-					$('#txtSenderSurname').val(res.senderSurname);
-					$('#txtSenderEmail').val(res.senderEmail);
-					$('#txtSenderPhone').val(res.senderPhone);
+					$('#txtSenderName').val(res[0].senderName);
+					$('#txtSenderSurname').val(res[0].senderSurname);
+					$('#txtSenderEmail').val(res[0].senderEmail);
+					$('#txtSenderPhone').val(res[0].senderPhone);
 
-					$('#txtRecipientName').val(res.recipientName);
-					$('#txtRecipientSurname').val(res.recipientSurname);
-					$('#txtRecipientEmail').val(res.recipientEmail);
-					$('#txtRecipientPhone').val(res.recipientPhone);
+					$('#txtRecipientName').val(res[0].recipientName);
+					$('#txtRecipientSurname').val(res[0].recipientSurname);
+					$('#txtRecipientEmail').val(res[0].recipientEmail);
+					$('#txtRecipientPhone').val(res[0].recipientPhone);
 
-					$('#txtCargoTrackingNumber').val(res.trackingNumber);
-					$('#txtCargoState').val(res.status);
-					$('#txtCargoExitDate').val(res.exitDate);
-					$('#txtCargoDeliveryAddress').val(res.deliveryAddress);
-					$('#txtCargoBranch').val(res.branchId);
+					$('#txtCargoTrackingNumber').val(res[0].trackingNumber);
+					$('#txtCargoState').val(res[0].status);
+					$('#txtCargoExitDate').val(res[0].exitDate);
+					$('#txtCargoDeliveryAddress').val(res[0].deliveryAddress);
+					$('#txtCargoBranch').val(res[0].branch.name);
 				}
 			})
 		}
