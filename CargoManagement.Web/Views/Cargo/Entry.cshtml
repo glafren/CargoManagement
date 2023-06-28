@@ -1,0 +1,89 @@
+﻿<div class="container-fluid">
+	<form method="post"  asp-controller="Cargo">
+		<div class="row">
+			<div class="col-md-10">
+				<h4>Gönderici Bilgileri</h4>
+				<table class="table">
+					<tbody>
+						<tr>
+							<th scope="row">Adı</th>
+							<td><input type="text" class="form-control" id="SenderName" name="SenderName" placeholder="Gönderici Adı"></td>
+						</tr>
+						<tr>
+							<th scope="row">Soyadı</th>
+							<td><input type="text" class="form-control" id="SenderSurname" name="SenderSurname" placeholder="Gönderici Soyadı"></td>
+						</tr>
+						<tr>
+							<th scope="row">Telefon</th>
+							<td><input type="text" class="form-control" id="SenderPhone" name="SenderPhone" placeholder="Gönderici Telefon"></td>
+						</tr>
+						<tr>
+							<th scope="row">Email</th>
+							<td><input type="email" class="form-control" id="SenderEmail" name="SenderEmail" placeholder="Gönderici Email"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-10">
+				<h4>Alıcı Bilgileri</h4>
+				<table class="table">
+					<tbody>
+						<tr>
+							<th scope="row">Adı</th>
+							<td><input type="text" class="form-control" id="RecipientName" name="RecipientName" placeholder="Alıcı Adı"></td>
+						</tr>
+						<tr>
+							<th scope="row">Soyadı</th>
+							<td><input type="text" class="form-control" id="RecipientSurname" name="RecipientSurname" placeholder="Alıcı Soyadı"></td>
+						</tr>
+						<tr>
+							<th scope="row">Telefon</th>
+							<td><input type="text" class="form-control" id="RecipientPhone" name="RecipientPhone" placeholder="Alıcı Telefon"></td>
+						</tr>
+						<tr>
+							<th scope="row">Email</th>
+							<td><input type="email" class="form-control" id="RecipientEmail" name="RecipientEmail" placeholder="Alıcı Email"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-10">
+				<h4>Kargo Bilgileri</h4>
+				<table class="table">
+					<tbody>
+						<tr>
+							<th scope="row">Takip Numarası</th>
+							<td><input type="text" class="form-control" id="TrackingNumber" name="TrackingNumber" placeholder="Kargo Takip Numarası"></td>
+							<td><a class="btn btn-primary">Numara Oluştur</a></td>
+						</tr>
+						<tr>
+							<th scope="row">Durumu</th>
+							<td><input type="text" class="form-control" id="Status" name="Status" placeholder="Kargo Durumu"></td>
+						</tr>
+						<tr>
+							<th scope="row">Çıkış Tarihi</th>
+							<td><input type="date" class="form-control" id="ExitDate" name="ExitDate"></td>
+						</tr>
+						<tr>
+							<th scope="row">Teslimat Adresi</th>
+							<td><textarea class="form-control" id="DeliveryAddress" name="DeliveryAddress" placeholder="Teslimat Adresi"></textarea></td>
+						</tr>
+						<tr>
+							<th scope="row">Çıkış Şubesi</th>
+							<td><input type="text" class="form-control" id="Branch" name="Branch" placeholder="Çıkış Şubesi"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="d-grid gap-2">
+				<button type="submit" class="btn btn-success">Kargoyu Oluştur</button>
+			</div>
+		</div>
+	</form>
+</div>

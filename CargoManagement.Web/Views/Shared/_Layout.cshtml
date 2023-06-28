@@ -147,9 +147,14 @@
 					<ul class="metismenu list-unstyled" id="side-menu">
 						<li class="menu-title">Menu</li>
 						<li>
-							<a asp-action="Index" asp-controller="Cargo">
-								<i class="uil-users-alt"></i><span>Kargo Yönetimi</span>
-							</a>
+							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="uil-window-section"></i><span>Kargo</span></a>
+							<ul class="sub-menu" aria-expanded="true">
+								<li><a asp-controller="Cargo" asp-action="Index">Kargo Yönetimi</a></li>
+								@if (User.IsInRole("Vezne") || User.IsInRole("Admin"))
+								{
+									<li><a asp-controller="Cargo" asp-action="Entry">Kargo Girişi</a></li>
+								}
+							</ul>
 						</li>
 						@if (User.IsInRole("Admin"))
 						{
@@ -161,7 +166,7 @@
 									<li><a asp-controller="User" asp-action="Index">Kullanıcı Yönetimi</a></li>
 									<li><a asp-controller="Branch" asp-action="Index">Şube Yönetimi</a></li>
 									<li><a asp-controller="AuthorizationRole" asp-action="Index">Yetki Yönetimi</a></li>
-									<li><a asp-controller="Cargo" asp-action="Index">Kargo Yönetimi</a></li>
+									@*<li><a asp-controller="Cargo" asp-action="Index">Kargo Yönetimi</a></li>*@
 								</ul>
 							</li>
 						}

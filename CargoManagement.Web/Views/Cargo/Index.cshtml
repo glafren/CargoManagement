@@ -126,10 +126,10 @@
 			DataTable = $('#tblCargos').DataTable({
 				ajax:'/Cargo/GetAll',
 				columns: [
-					{data:'id',title:'Id'},
-					{data:'trackingNumber', title:'Takip Numarası'},
-					{data:'senderName', title:'Gönderen Adı'},
+					{data:'trackingNumber', title:'Takip Numarası',width:'150px'},
+					{ data: 'senderName', title: 'Gönderen Adı', width: '150px' },
 					{data: 'recipientName', title:'Alıcı Adı'},
+					{ data: 'branch.name', title: 'Çıkış Şubesi', width: '150px' },
 					{data: 'deliveryAddress', title:'Gönderilen Adres'},
 					{data: 'id', title:'İşlemler', render: function(data){
 							return `<a onclick="showMore('${data}')" class="btn btn-primary"><i class="fas fa-indent"></i></a>`
