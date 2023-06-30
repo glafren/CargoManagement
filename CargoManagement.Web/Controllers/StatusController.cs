@@ -1,4 +1,6 @@
-﻿using CargoManagement.Repository.Shared.Abstract;
+﻿using CargoManagement.Model;
+using CargoManagement.Repository.Shared.Abstract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CargoManagement.Web.Controllers
@@ -28,6 +30,36 @@ namespace CargoManagement.Web.Controllers
 			unitOfWork.Statuses.Remove(id);
 			unitOfWork.Save();
 			return Ok();
+		}
+
+		[Authorize]
+		[HttpPost]
+		public IActionResult Create(Status status)
+		{
+			if (status != null)
+			{
+				unitOfWork.Statuses.Add(status);
+				unitOfWork.Save();
+				return Ok();
+			}
+			else
+				return BadRequest();
+		}
+
+		[Authorize]
+		[HttpPost]
+		public IActionResult Update(Status status)
+		{
+			Status asil = unitOfWork.Statuses.GetFirstOrDefault(x => x.Id == status.Id);
+			asil.Name = status.Name;
+			unitOfWork.Statuses.Update(asil);
+			unitOfWork.Save();
+			return Ok();
+		}
+
+		public IActionResult GetById(Guid id)
+		{
+			return Json(unitOfWork.Statuses.GetById(id));
 		}
 	}
 }

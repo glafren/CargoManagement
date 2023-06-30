@@ -11,6 +11,30 @@
 	</div>
 </div>
 
+<div class="modal fade" id="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalTitle">Durum Ekle </h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="container">
+					<div class="mb-3">
+						<label class="form-label">Durum Adı</label>
+						<input type="text" id="txtName" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+				<a href="#" id="btnSave" class="btn btn-primary">Kaydet</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 @section Scripts{
 	<script>
 		var DataTable;
@@ -74,6 +98,65 @@
 				}
 			});
 		}
+
+		function editStatus(statusId){
+			
+			 $.ajax({
+				 type:'Post',
+				 url:'/Status/GetById',
+				 data: {id: statusId},
+				 success: function(res){
+					$('#modalTitle').text('Durum Güncelle');
+					$('#btnSave').text("Güncelle").removeClass('btn-primary').addClass("btn-success");
+					$('#txtName').val(res.name);
+					$('#modal').modal('show');
+					$('#btnSave').off();
+					$('#btnSave').click(function(){
+						$.ajax({
+							type:'Post',
+							url:'/Status/Update',
+							data: {id: statusId, name: $('#txtName').val()},
+							success: function(){
+								$('#modal').modal('hide');
+								toastr.success('Kayıt Başarıyla Güncellendi');
+								DataTable.ajax.reload();
+							}
+						})
+					})
+				 }
+			 })
+			
+			
+			
+			
+			
+		}
+
+		$('#btnEkle').click(function () {
+			$('#modalTitle').text('Durum Ekle');
+			$('#btnSave').text("Kaydet").removeClass('btn-success').addClass("btn-primary");
+			$('#txtName').val('');
+			$('#modal').modal('show');
+
+			$('#btnSave').off();
+			$('#btnSave').click(function () {
+				let veri = {
+					name: $('#txtName').val()
+				}
+
+				$.ajax({
+					type: 'POST',
+					url: '/Status/Create',
+					data: veri,
+					success: function () {
+						$('#modal').modal('hide');
+						toastr.success('Durum başarıyla eklendi!');
+						$('#txtName').val("");
+						DataTable.ajax.reload();
+					}
+				})
+			})
+		})
 
 	</script>
 }

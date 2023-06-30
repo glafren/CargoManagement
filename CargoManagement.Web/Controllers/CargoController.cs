@@ -21,7 +21,7 @@ namespace CargoManagement.Web.Controllers
 		}
 		public IActionResult GetAll()
 		{
-			return Json(new { data = unitOfWork.Cargos.GetAll().Include(c => c.Branch).Include(c=>c.Status) });
+			return Json(new { data = unitOfWork.Cargos.GetAll().Include(c => c.Branch).Include(c => c.Status) });
 		}
 
 		[HttpPost]
@@ -40,5 +40,7 @@ namespace CargoManagement.Web.Controllers
 		{
 			return View();
 		}
+
+		
 	}
 }
