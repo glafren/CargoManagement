@@ -62,7 +62,7 @@
 						</tr>
 						<tr>
 							<th scope="row">Durumu</th>
-							<td><input type="text" class="form-control" id="Status" name="Status" placeholder="Kargo Durumu"></td>
+							<td><select class="form-control select2" id="Status" name="Status" placeholder="Kargo Durumu"></select></td>
 						</tr>
 						<tr>
 							<th scope="row">Çıkış Tarihi</th>
@@ -94,6 +94,7 @@
 		$(document).ready(function(){
 			
 			fillDdlBranch();
+			fillDdlStatus();
 		})
 
 
@@ -108,6 +109,21 @@
 					for(var item of res.data)
 					{
 						$('#Branch').append(new Option(item.name, item.id,false,false));
+					}
+				}
+			});
+		}
+
+		function fillDdlStatus(){
+			$('#Status').select2({width:'100%', dropdownParent: $('#cargo')});
+			$.ajax({
+				type:'Get',
+				url:'/Status/GetAll',
+				success: function(res){
+					$('#Status').empty();
+					for(var item of res.data)
+					{
+						$('#Status').append(new Option(item.name, item.id, false, false))
 					}
 				}
 			});
