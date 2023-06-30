@@ -1,0 +1,79 @@
+﻿<div>
+	<div class="card">
+		<div class="card-header  text-white bg-success bg-gradient">
+			<span class="fs-4">Kargo Durum Listesi</span>
+			<a href="#" id="btnEkle" class="btn btn-warning ms-2">Durum Ekle</a>
+		</div>
+		<div class="card-body" style="overflow:auto">
+			<table id="tblStatuses" class="table table-bordered table-striped" style="width:100%">
+			</table>
+		</div>
+	</div>
+</div>
+
+@section Scripts{
+	<script>
+		var DataTable;
+
+		$(document).ready(function () {
+			fillDataTable();
+		})
+
+		function fillDataTable() {
+			DataTable = $('#tblStatuses').DataTable({
+				ajax: '/Status/GetAll',
+				columns: [
+					{ data: 'id', title: 'Id', width: '350px' },
+					{ data: 'name', title: 'Durum' },
+					{
+						data: 'id', title: 'İşlemler', render: function (data) {
+							return `
+											<a href="#" onclick="deleteStatus('${data}')" class="btn btn-danger">Sil</a>
+											<a href="#" onclick="editStatus('${data}')" class="btn btn-primary">Düzenle</a>
+									`;
+						}
+					}
+				]
+			})
+		}
+
+
+		function deleteStatus(statusId) {
+			Swal.fire({
+				title: 'Silmek istediğinize emin misiniz?',
+				text: "Durum Silinecek",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3095d6',
+				cancelButtonColor: '#d37',
+				confirmButtonText: 'Sil!'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					$.ajax({
+						type: 'Post',
+						url: '/Status/Remove',
+						data: {
+							id: statusId
+						},
+						success: function () {
+							Swal.fire(
+								'Başarılı!',
+								'Durum silindi.',
+								'success'
+							);
+							DataTable.ajax.reload();
+						},
+						error: function () {
+							Swal.fire({
+								icon: 'error',
+								title: 'Silme işlemi başarısız!',
+								text: 'Bir şeyler yanlış gitti!'
+							});
+						}
+					});
+				}
+			});
+		}
+
+	</script>
+}
