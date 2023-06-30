@@ -16,5 +16,6 @@ namespace CargoManagement.Data
 		public virtual DbSet<AuthorizationRole> AuthorizationRoles { get; set; }
 		public virtual DbSet<Cargo> Cargos { get; set; }
 		public virtual DbSet<Branch> Branches { get; set; }
+		public virtual DbSet<Status> Statuses { get; set; }
 	}
 }

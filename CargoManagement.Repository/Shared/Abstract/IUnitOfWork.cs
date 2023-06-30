@@ -13,6 +13,7 @@ namespace CargoManagement.Repository.Shared.Abstract
 		IRepository<Cargo> Cargos { get; }
 		IRepository<Branch> Branches { get; }
 		IRepository<AuthorizationRole> AuthorizationRoles { get; }
+		IRepository<Status> Statuses { get; }
 
 		void Save();
 	}

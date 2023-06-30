@@ -9,7 +9,8 @@ namespace CargoManagement.Model
 	public class Cargo: BaseModel
 	{
 		public string? TrackingNumber { get; set; }
-		public string? Status { get; set; }
+		public Guid? StatusId { get; set; }
+		public virtual Status Status { get; set; }
 		public DateTime? ExitDate { get; set; } 
 		public string? DeliveryAddress { get; set; }
 		public string? SenderName { get; set; }

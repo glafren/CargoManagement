@@ -19,6 +19,7 @@ namespace CargoManagement.Repository.Shared.Concrete
 		public IRepository<Branch> Branches {get; private set;}
 
 		public IRepository<AuthorizationRole> AuthorizationRoles {get; private set;}
+		public IRepository<Status> Statuses { get; private set;}
 
 		private readonly ApplicationDbContext _db;
 
@@ -29,6 +30,7 @@ namespace CargoManagement.Repository.Shared.Concrete
 			Cargos = new Repository<Cargo>(db);
 			Branches = new Repository<Branch>(db);
 			AuthorizationRoles = new Repository<AuthorizationRole>(db);
+			Statuses = new Repository<Status>(db);
 		}
 
 		public void Save()
