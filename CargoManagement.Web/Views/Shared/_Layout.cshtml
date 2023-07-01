@@ -154,6 +154,10 @@
 								{
 									<li><a asp-controller="Cargo" asp-action="Entry">Kargo Girişi</a></li>
 								}
+								@if (User.IsInRole("Teslimat") || User.IsInRole("Admin"))
+								{
+									<li><a asp-controller="Cargo" asp-action="Status">Kargo Durumu</a></li>
+								}
 							</ul>
 						</li>
 						@if (User.IsInRole("Admin"))
@@ -239,7 +243,7 @@
 	<!-- Sweet alert init js-->
 	<script src="~/assets/js/pages/sweet-alerts.init.js"></script>
 
-	<script src="assets/js/pages/fontawesome.init.js"></script>
+	<script src="~/assets/js/pages/fontawesome.init.js"></script>
 
 	<!-- App js -->
 	<script src="~/assets/js/app.js"></script>

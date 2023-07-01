@@ -1,0 +1,96 @@
+﻿<div>
+	<div class="card">
+		<div class="card-header  text-white bg-success bg-gradient">
+			<span class="fs-4">Kargo Durum Listesi</span>
+		</div>
+		<div class="card-body" style="overflow:auto">
+			<table id="tblStatuses" class="table table-bordered table-striped" style="width:100%">
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="modal" id="modal" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Kargo Durumu Değiştir</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<select class="form-control select2" id="Status" name="Status" placeholder="Kargo Durumu"></select>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<button type="button" id="btnSave" class="btn btn-primary">Güncelle</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts{
+	<script>
+		var DataTable;
+
+		$(document).ready(function(){
+			fillDataTable();
+			fillDdlStatus();
+		})
+
+		function fillDataTable()
+		{
+			DataTable = $('#tblStatuses').DataTable({
+				ajax:'/Cargo/GetAll',
+				columns:[
+					{data: 'trackingNumber', title:'Takip Numarası'},
+					{data: 'branch.name', title:'Çıkış Şubesi'},
+					{data: 'status.name', title: 'Durum', render: function (data, type, row) { return ` ${data} <a class="btn btn-sm btn-primary" onclick="changeStatus('${row.id}')"><i class="fas fa-retweet"></i></a>` } }
+				]
+			})
+		}
+
+		function changeStatus(cargoId)
+		{
+			$('.select2').select2({ width: '100%', dropdownParent: $('#modal') });
+			$('#modal').modal("show");
+			$.ajax({
+				type:'Post',
+				url:'/Cargo/GetCargo',
+				data: {id: cargoId},
+				success: function(res){
+					console.log(res);
+					$('#Status').val(res[0].statusId).trigger('change');
+				}
+			});
+			$('#btnSave').click(function () {
+				$.ajax({
+					type: 'Post',
+					url: '/Cargo/ChangeStatus',
+					data: { id: cargoId, statusId: $('#Status option:selected').val() },
+					success: function () {
+						toastr.success('Durum başarıyla değiştirildi');
+						$('#modal').modal('hide');
+						DataTable.ajax.reload();
+					},
+					error: function () { toastr.error('Durum değiştirilrken bir hata oluştu!'); }
+				})
+			})
+		}
+
+		
+
+		function fillDdlStatus() {
+			$('#Status').select2({ width: '100%', dropdownParent: $('#cargo') });
+			$.ajax({
+				type: 'Get',
+				url: '/Status/GetAll',
+				success: function (res) {
+					$('#Status').empty();
+					for (var item of res.data) {
+						$('#Status').append(new Option(item.name, item.id, false, false))
+					}
+				}
+			});
+		}
+	</script>
+}
