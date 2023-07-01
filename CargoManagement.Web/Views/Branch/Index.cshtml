@@ -61,6 +61,37 @@
 			})
 		}
 
+		function editBranch(branchId){
+			$.ajax({
+				type:'Post',
+				url:'/Branch/GetById',
+				data:{id:branchId},
+				success: function(res){
+					$('#modal').modal('show');
+					$('#modalTitle').text("Şube Düzenle");
+					$('#btnSave').removeClass('btn-primary').addClass('btn-success').text('Güncelle');
+					$('#btnSave').off();
+					$('#txtName').val(res.name);
+
+					$('#btnSave').click(function(){
+						$.ajax({
+							type:'Post',
+							url:'/Branch/Update',
+							data: { id: branchId, name: $('#txtName').val()},
+							success: function(){
+								$('#modal').modal('hide');
+								toastr.success('Şube bilgileri güncellendi!');
+								DataTable.ajax.reload();
+							},
+							error:function(){
+								$('#modal').modal('hide');
+								toastr.error('Şube bilgileri güncellenirken hata oluştu!');
+							}
+						})
+					})
+				}
+			})
+		}
 
 		function deleteBranch(branchId) {
 			Swal.fire({
@@ -103,7 +134,7 @@
 			$('#modal').modal('show');
 			$('#txtName').val("");
 			$('#modalTitle').text("Şube Ekle");
-			$('#btnSave').removeClass('btn-success').addClass('btn-primary').val('Kaydet');
+			$('#btnSave').removeClass('btn-success').addClass('btn-primary').text('Kaydet');
 			$('#btnSave').off();
 			$('#btnSave').click(function () {
 				$.ajax({

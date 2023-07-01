@@ -45,5 +45,27 @@ namespace CargoManagement.Web.Controllers
 			else
 				return BadRequest();
 		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpPost]
+		public IActionResult Update(Branch branch)
+		{
+			if (branch.Name != null)
+			{
+				Branch asil = unitOfWork.Branches.GetFirstOrDefault(x => x.Id == branch.Id);
+				asil.Name = branch.Name;
+				unitOfWork.Branches.Update(asil);
+				unitOfWork.Save();
+				return Ok();
+			}
+			else { return BadRequest(); }
+
+		}
+
+		[HttpPost]
+		public IActionResult GetById(Guid id)
+		{
+			return Json(unitOfWork.Branches.GetById(id));
+		}
 	}
 }
