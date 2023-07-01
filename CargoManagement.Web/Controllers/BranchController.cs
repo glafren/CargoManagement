@@ -1,4 +1,6 @@
-﻿using CargoManagement.Repository.Shared.Abstract;
+﻿using CargoManagement.Model;
+using CargoManagement.Repository.Shared.Abstract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CargoManagement.Web.Controllers
@@ -28,6 +30,20 @@ namespace CargoManagement.Web.Controllers
 			unitOfWork.Branches.Remove(id);
 			unitOfWork.Save();
 			return Ok();
+		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpPost]
+		public IActionResult Create(Branch branch)
+		{
+			if (branch.Name != null)
+			{
+				unitOfWork.Branches.Add(branch);
+				unitOfWork.Save();
+				return Ok();
+			}
+			else
+				return BadRequest();
 		}
 	}
 }

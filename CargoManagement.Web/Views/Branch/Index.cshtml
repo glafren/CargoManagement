@@ -11,36 +11,58 @@
 	</div>
 </div>
 
-
+<div class="modal fade" id="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalTitle">Şube Ekle </h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="container">
+					<div class="mb-3">
+						<label class="form-label">Şube Adı</label>
+						<input type="text" id="txtName" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+				<a href="#" id="btnSave" class="btn btn-primary">Kaydet</a>
+			</div>
+		</div>
+	</div>
+</div>
 
 
 @section Scripts{
 	<script>
 		var DataTable;
 
-		$(document).ready(function(){
+		$(document).ready(function () {
 			fillDataTable();
 		})
 
-		function fillDataTable(){
+		function fillDataTable() {
 			DataTable = $('#tblBranches').DataTable({
-				ajax:'/Branch/GetAll',
+				ajax: '/Branch/GetAll',
 				columns: [
-					{ data: 'id', title:'Id', width:'350px' },
-					{ data: 'name', title:'Şube Adı' },
-					{ data: 'id', title:'İşlemler', render: function(data){
+					{ data: 'id', title: 'Id', width: '350px' },
+					{ data: 'name', title: 'Şube Adı' },
+					{
+						data: 'id', title: 'İşlemler', render: function (data) {
 							return `
-									<a href="#" onclick="deleteBranch('${data}')" class="btn btn-danger">Sil</a>
-									<a href="#" onclick="editBranch('${data}')" class="btn btn-primary">Düzenle</a>
-							`;
-						} 
+											<a href="#" onclick="deleteBranch('${data}')" class="btn btn-danger">Sil</a>
+											<a href="#" onclick="editBranch('${data}')" class="btn btn-primary">Düzenle</a>
+									`;
+						}
 					}
 				]
 			})
 		}
 
 
-		function deleteBranch(branchId){
+		function deleteBranch(branchId) {
 			Swal.fire({
 				title: 'Silmek istediğinize emin misiniz?',
 				text: "Şube Silinecek",
@@ -77,7 +99,30 @@
 			});
 		}
 
-		
+		$('#btnEkle').click(function () {
+			$('#modal').modal('show');
+			$('#txtName').val("");
+			$('#modalTitle').text("Şube Ekle");
+			$('#btnSave').removeClass('btn-success').addClass('btn-primary').val('Kaydet');
+			$('#btnSave').off();
+			$('#btnSave').click(function () {
+				$.ajax({
+					type: 'Post',
+					url: '/Branch/Create',
+					data: { name: $('#txtName').val() },
+					success: function () {
+						toastr.success('Şube Başarıyla Eklendi.');
+						DataTable.ajax.reload();
+						$('#modal').modal('hide');
+					},
+					error: function () {
+						toastr.error('Şube eklenirken bir hata oluştu!');
+						$('#modal').modal('hide');
+					}
+				})
+			})
+		})
+
 
 	</script>
 }
