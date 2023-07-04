@@ -11,6 +11,31 @@
 	</div>
 </div>
 
+
+<div class="modal fade" id="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalTitle">Yetki Ekle </h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="container">
+					<div class="mb-3">
+						<label class="form-label">Yetki Adı</label>
+						<input type="text" id="txtName" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+				<a href="#" id="btnSave" class="btn btn-primary">Kaydet</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 @section Scripts{
 	<script>
 		var DataTable;
@@ -34,6 +59,58 @@
 						}
 					}
 				]
+			})
+		}
+
+		$('#btnEkle').click(function(){
+			$('#modal').modal('show');
+			$('#modalTitle').text("Yetki Ekle");
+			$('#btnSave').removeClass('btn-success').addClass('btn-primary').text('Kaydet');
+			$('#txtName').val("");
+			$('#btnSave').off();
+
+			$('#btnSave').click(function(){
+				$.ajax({
+					type:'Post',
+					url: '/AuthorizationRole/Create',
+					data:{name:$('#txtName').val()},
+					success: function(){
+						$('#modal').modal('hide');
+						DataTable.ajax.reload();
+					}
+				})
+			})
+		})
+
+		function editRole(roleId){
+			$.ajax({
+				type:'Post',
+				url: '/AuthorizationRole/GetById',
+				data: {id:roleId},
+				success: function(res){
+					$('#modal').modal('show');
+					$('#modalTitle').text("Yetki Düzenle");
+					$('#btnSave').removeClass('btn-primary').addClass('btn-success').text('Güncelle');
+					$('#btnSave').off();
+					$('#txtName').val(res.name);
+
+					$('#btnSave').click(function(){
+						$.ajax({
+							type:'Post',
+							url:'/AuthorizationRole/Update',
+							data:{id: roleId, name: $("#txtName").val()},
+							success: function(){
+								$('#modal').modal('hide');
+								toastr.success('Rol Başarıyla Güncellendi');
+								DataTable.ajax.reload();
+							},
+							error:function(){
+								$('#modal').modal('hide');
+								toastr.error('Rol güncellenirken hata oluştu!');
+							}
+						});
+					});
+				}
 			})
 		}
 
