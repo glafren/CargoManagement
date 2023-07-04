@@ -10,6 +10,7 @@ using System.Security.Claims;
 
 namespace CargoManagement.Web.Controllers
 {
+	[Authorize]
 	public class UserController : Controller
 	{
 		private readonly IUnitOfWork unitOfWork;
@@ -60,7 +61,8 @@ namespace CargoManagement.Web.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult GetById(Guid id){
+		public IActionResult GetById(Guid id)
+		{
 			return Json(unitOfWork.Users.GetById(id));
 		}
 

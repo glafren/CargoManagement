@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CargoManagement.Web.Controllers
 {
+	[Authorize]
 	public class StatusController : Controller
 	{
 		private readonly IUnitOfWork unitOfWork;
@@ -24,6 +25,7 @@ namespace CargoManagement.Web.Controllers
 			return Json(new { data = unitOfWork.Statuses.GetAll() });
 		}
 
+		[Authorize(Roles ="Admin")]
 		[HttpPost]
 		public IActionResult Remove(Guid id)
 		{
@@ -32,7 +34,7 @@ namespace CargoManagement.Web.Controllers
 			return Ok();
 		}
 
-		[Authorize]
+		[Authorize(Roles ="Admin")]
 		[HttpPost]
 		public IActionResult Create(Status status)
 		{
@@ -46,7 +48,7 @@ namespace CargoManagement.Web.Controllers
 				return BadRequest();
 		}
 
-		[Authorize]
+		[Authorize(Roles ="Admin")]
 		[HttpPost]
 		public IActionResult Update(Status status)
 		{

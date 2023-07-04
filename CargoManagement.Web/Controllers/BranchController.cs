@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CargoManagement.Web.Controllers
 {
+	[Authorize]
 	public class BranchController : Controller
 	{
 		private readonly IUnitOfWork unitOfWork;
@@ -24,6 +25,7 @@ namespace CargoManagement.Web.Controllers
 			return Json(new { data = unitOfWork.Branches.GetAll() });
 		}
 
+		[Authorize(Roles ="Admin")]
 		[HttpPost]
 		public IActionResult Remove(Guid id)
 		{
