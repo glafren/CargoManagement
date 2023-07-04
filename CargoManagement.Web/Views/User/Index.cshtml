@@ -11,12 +11,48 @@
 	</div>
 </div>
 
+<div class="modal fade" id="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalTitle">Kullanıcı Ekle </h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="container">
+					<div class="mb-3">
+						<label class="form-label">Ad</label>
+						<input type="text" id="txtName" class="form-control">
+					</div>
+					<div class="mb-3">
+						<label class="form-label">Kullanıcı Adı</label>
+						<input type="text" id="txtUserName" class="form-control">
+					</div>
+					<div class="mb-3">
+						<label class="form-label">Password</label>
+						<input type="text" id="txtPassword" class="form-control">
+					</div>
+					<div class="mb-3">
+						<label class="form-label">Yetki</label>
+						<select class="form-control select2" id="Authorization" name="Authorization" placeholder="Yeki"></select>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+				<a href="#" id="btnSave" class="btn btn-primary">Kaydet</a>
+			</div>
+		</div>
+	</div>
+</div>
+
 @section Scripts{
 	<script>
 		var DataTable;
 
 		$(document).ready(function () {
 			fillDataTable();
+			fillDdlAuthorization();
 		})
 
 		function fillDataTable() {
@@ -27,21 +63,101 @@
 					{ data: 'name', title: 'Şube Adı' },
 					{ data: 'userName', title: 'Kullancı Adı' },
 					{ data: 'password', title: 'Şifre' },
-					{ data: 'authorizationRoleId', title: 'Yetki' },
+					{ data: 'authorizationRole.name', title: 'Yetki' },
 					{
 						data: 'id', title: 'İşlemler', render: function (data) {
 							return `
-											<a href="#" onclick="deleteUser('${data}')" class="btn btn-danger">Sil</a>
-											<a href="#" onclick="editUser('${data}')" class="btn btn-primary">Düzenle</a>
-									`;
+													<a href="#" onclick="deleteUser('${data}')" class="btn btn-danger">Sil</a>
+													<a href="#" onclick="editUser('${data}')" class="btn btn-primary">Düzenle</a>
+											`;
 						}
 					}
 				]
 			})
 		}
 
+		$('#btnEkle').click(function () {
+			$('#modal').modal('show');
+			$('#modalTitle').text("Kullanıcı Ekle");
+			$('#btnSave').removeClass('btn-success').addClass('btn-primary').text('Kaydet');
+			$('#txtName').val("");
+			$('#txtUserName').val("");
+			$('#txtPassword').val("");
+			$('#Authorization').val("");
+			$('#btnSave').off();
 
-		function deleteBranch(userId) {
+			$('#btnSave').click(function () {
+				let veri = {
+					name: $('#txtName').val(),
+					userName: $('#txtUserName').val(),
+					password: $('#txtPassword').val(),
+					authorizationRoleId: $('#Authorization option:selected').val()
+				}
+				$.ajax({
+					type: 'Post',
+					url: '/User/Create',
+					data: veri,
+					success: function () {
+						toastr.success('Kullanıcı başarıyla eklendi!');
+						DataTable.ajax.reload();
+						$('#modal').modal('hide');
+					},
+					error: function () {
+						toastr.error('Kullanıcı eklenirken bir hata meydana geldi!');
+						DataTable.ajax.reload();
+						$('#modal').modal('hide');
+					}
+				})
+			})
+		})
+
+		function editUser(userId) {
+			$.ajax({
+				type: 'Post',
+				url: '/User/GetById',
+				data: { id: userId },
+				success: function (res) {
+					$('#modal').modal('show');
+					$('#modalTitle').text("Kullanıcı Düzenle");
+					$('#btnSave').removeClass('btn-primary').addClass('btn-success').text('Güncelle');
+					$('#btnSave').off();
+
+					$('#txtName').val(res.name);
+					$('#txtUserName').val(res.userName);
+					$('#txtPassword').val(res.password);
+					$('#Authorization').val(res.authorizationRoleId).trigger('change');
+
+					$('#btnSave').click(function () {
+						
+						let veri = {
+							id: res.id,
+							name: $('#txtName').val(),
+							userName: $('#txtUserName').val(),
+							password: $('#txtPassword').val(),
+							authorizationRoleId: $('#Authorization option:selected').val()
+						}
+
+						$.ajax({
+							type: 'Post',
+							url: '/User/Update',
+							data: veri,
+							success: function(){
+								toastr.success('Kullanıcı bilgileri başarıyla güncellendi');
+								DataTable.ajax.reload();
+								$('#modal').modal('hide');
+							},
+							error: function(){
+								toastr.error('Kullanıcı bilgileri güncellenirkenbir hata meydana geldi!');
+								DataTable.ajax.reload();
+								$('#modal').modal('hide');
+							}
+						});
+					});
+				}
+			});
+		}
+
+		function deleteUser(userId) {
 			Swal.fire({
 				title: 'Silmek istediğinize emin misiniz?',
 				text: "Kullanıcı Silinecek",
@@ -74,6 +190,21 @@
 							});
 						}
 					});
+				}
+			});
+		}
+
+		function fillDdlAuthorization() {
+			$('#Authorization').select2({ width: '100%', dropdownParent: $('#modal') });
+			$.ajax({
+				type: 'Get',
+				url: '/AuthorizationRole/GetAll',
+				success: function (res) {
+					console.log(res);
+					$('#Authorization').empty();
+					for (var item of res.data) {
+						$('#Authorization').append(new Option(item.name, item.id, false, false));
+					}
 				}
 			});
 		}
