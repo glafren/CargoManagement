@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
+using System.Diagnostics.Eventing.Reader;
 
 namespace CargoManagement.Web.Controllers
 {
@@ -50,7 +51,7 @@ namespace CargoManagement.Web.Controllers
 			return View();
 		}
 
-		[Authorize(Roles ="Admin, Teslimat")]
+		[Authorize(Roles = "Admin, Teslimat")]
 		[HttpPost]
 		public IActionResult ChangeStatus(Cargo cargoState)
 		{
@@ -59,6 +60,22 @@ namespace CargoManagement.Web.Controllers
 			unitOfWork.Cargos.Update(asil);
 			unitOfWork.Save();
 			return Ok();
+		}
+
+		[Authorize(Roles = "Admin, Vezne")]
+		[HttpPost]
+		public IActionResult Create(Cargo cargo)
+		{
+			if (cargo.TrackingNumber != null)
+			{
+				unitOfWork.Cargos.Add(cargo);
+				unitOfWork.Save();
+				return Ok();
+			}
+			else
+			{
+				return BadRequest();
+			}
 		}
 	}
 }

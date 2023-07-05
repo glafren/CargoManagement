@@ -10,7 +10,6 @@ using System.Security.Claims;
 
 namespace CargoManagement.Web.Controllers
 {
-	[Authorize]
 	public class UserController : Controller
 	{
 		private readonly IUnitOfWork unitOfWork;

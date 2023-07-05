@@ -7,19 +7,19 @@
 					<tbody>
 						<tr>
 							<th scope="row">Adı</th>
-							<td><input type="text" class="form-control" id="SenderName" name="SenderName" placeholder="Gönderici Adı"></td>
+							<td><input type="text" class="form-control txt" id="SenderName" name="SenderName" placeholder="Gönderici Adı"></td>
 						</tr>
 						<tr>
 							<th scope="row">Soyadı</th>
-							<td><input type="text" class="form-control" id="SenderSurname" name="SenderSurname" placeholder="Gönderici Soyadı"></td>
+							<td><input type="text" class="form-control txt" id="SenderSurname" name="SenderSurname" placeholder="Gönderici Soyadı"></td>
 						</tr>
 						<tr>
 							<th scope="row">Telefon</th>
-							<td><input type="text" class="form-control" id="SenderPhone" name="SenderPhone" placeholder="Gönderici Telefon"></td>
+							<td><input type="text" class="form-control txt input-mask" id="SenderPhone" name="SenderPhone" placeholder="Başında sıfır olmadan gönderen kişi telefon numarasını giriniz" data-inputmask=" 'mask' : '999-999-99-99' "></td>
 						</tr>
 						<tr>
 							<th scope="row">Email</th>
-							<td><input type="email" class="form-control" id="SenderEmail" name="SenderEmail" placeholder="Gönderici Email"></td>
+							<td><input type="email" class="form-control txt" id="SenderEmail" name="SenderEmail" placeholder="Gönderici Email"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -32,19 +32,19 @@
 					<tbody>
 						<tr>
 							<th scope="row">Adı</th>
-							<td><input type="text" class="form-control" id="RecipientName" name="RecipientName" placeholder="Alıcı Adı"></td>
+							<td><input type="text" class="form-control txt" id="RecipientName" name="RecipientName" placeholder="Alıcı Adı"></td>
 						</tr>
 						<tr>
 							<th scope="row">Soyadı</th>
-							<td><input type="text" class="form-control" id="RecipientSurname" name="RecipientSurname" placeholder="Alıcı Soyadı"></td>
+							<td><input type="text" class="form-control txt" id="RecipientSurname" name="RecipientSurname" placeholder="Alıcı Soyadı"></td>
 						</tr>
 						<tr>
 							<th scope="row">Telefon</th>
-							<td><input type="text" class="form-control" id="RecipientPhone" name="RecipientPhone" placeholder="Alıcı Telefon"></td>
+							<td><input type="text" class="form-control txt input-mask" id="RecipientPhone" name="RecipientPhone" placeholder="Başında sıfır olmadan alıcı kişinin telefon numarasını giriniz" data-inputmask=" 'mask' : '999-999-99-99' "></td>
 						</tr>
 						<tr>
 							<th scope="row">Email</th>
-							<td><input type="email" class="form-control" id="RecipientEmail" name="RecipientEmail" placeholder="Alıcı Email"></td>
+							<td><input type="email" class="form-control txt" id="RecipientEmail" name="RecipientEmail" placeholder="Alıcı Email"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -57,8 +57,8 @@
 					<tbody>
 						<tr>
 							<th scope="row">Takip Numarası</th>
-							<td><input type="text" class="form-control" id="TrackingNumber" name="TrackingNumber" placeholder="Kargo Takip Numarası"></td>
-							<td><a class="btn btn-primary">Numara Oluştur</a></td>
+							<td><input type="text" class="form-control txt" id="TrackingNumber" name="TrackingNumber" placeholder="Kargo Takip Numarası" readonly></td>
+							<td><a class="btn btn-primary" id="btnTrackingNumber">Numara Oluştur</a></td>
 						</tr>
 						<tr>
 							<th scope="row">Durumu</th>
@@ -66,11 +66,11 @@
 						</tr>
 						<tr>
 							<th scope="row">Çıkış Tarihi</th>
-							<td><input type="date" class="form-control" id="ExitDate" name="ExitDate"></td>
+							<td><input type="date" class="form-control txt" id="ExitDate" name="ExitDate"></td>
 						</tr>
 						<tr>
 							<th scope="row">Teslimat Adresi</th>
-							<td><textarea class="form-control" id="DeliveryAddress" name="DeliveryAddress" placeholder="Teslimat Adresi"></textarea></td>
+							<td><textarea class="form-control txt" id="DeliveryAddress" name="DeliveryAddress" placeholder="Teslimat Adresi"></textarea></td>
 						</tr>
 						<tr>
 							<th scope="row">Çıkış Şubesi</th>
@@ -82,20 +82,71 @@
 		</div>
 		<div class="row">
 			<div class="d-grid gap-2">
-				<button type="submit" class="btn btn-success">Kargoyu Oluştur</button>
+				<button type="submit" id="btnSave" disabled class="btn btn-success">Kargoyu Oluştur</button>
 			</div>
 		</div>
 	</form>
 </div>
 
 @section Scripts{
+	<script src="~/assets/libs/inputmask/min/jquery.inputmask.bundle.min.js"></script>
 	<script>
 		
 		$(document).ready(function(){
-			
+			$(".input-mask").inputmask();
 			fillDdlBranch();
 			fillDdlStatus();
 		})
+
+		$('#btnTrackingNumber').click(function () {
+			$('#btnSave').attr('disabled',false); // kargo numarası oluşturmadan btnSave Aktif olmasın
+			var guid = generateGUID();
+			var formattedGuid = guid.replace(/-/g, ''); // '-' işaretlerini kaldır
+			$('#TrackingNumber').val(formattedGuid);
+		});
+
+		function generateGUID() {
+			var currentDate = new Date().getTime();
+			var guid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+				var r = (currentDate + Math.random() * 16) % 16 | 0;
+				currentDate = Math.floor(currentDate / 16);
+				return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+			});
+			return guid;
+		}
+
+		$('#btnSave').click(function(){
+			let cargo = {
+				senderName: $('#SenderName').val(),
+				senderSurname: $('#SenderSurname').val(),
+				senderPhone: $('#SenderPhone').val(),
+				senderEmail: $('#SenderEmail').val(),
+
+				recipientName: $('#RecipientName').val(),
+				recipientSurname: $('#RecipientSurname').val(),
+				recipientPhone: $('#RecipientPhone').val(),
+				recipientEmail: $('#RecipientEmail').val(),
+
+				trackingNumber: $('#TrackingNumber').val(),
+				statusId: $('#Status option:selected').val(),
+				exitDate: $('#ExitDate').val(),
+				deliveryAddress: $('#DeliveryAddress').val(),
+				branchId: $('#Branch option:selected').val(),
+			}
+
+			$.ajax({
+				type:'post',
+				url:'/Cargo/Create',
+				data: cargo,
+				success: function(){
+					$('.txt').val("");
+					toastr.success('Kargo Başarıyla Eklendi');
+				},
+				error: function(){
+					toastr.error('Kargo eklenirken hata oluştu!');
+				}
+			})
+		});
 
 
 		function fillDdlBranch(){
