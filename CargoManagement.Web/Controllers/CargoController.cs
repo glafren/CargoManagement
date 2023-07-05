@@ -33,10 +33,25 @@ namespace CargoManagement.Web.Controllers
 			return Json(unitOfWork.Cargos.GetById(id));
 		}
 
+
 		[HttpPost]
 		public IActionResult GetCargo(Guid id)
 		{
 			return Json(unitOfWork.Cargos.GetAll(x => x.Id == id).Include(c => c.Branch).Include(c => c.Status));
+		}
+
+		[HttpPost]
+		public IActionResult SearchCargo(string trackingNumber)
+		{
+			if (trackingNumber != null)
+			{
+				return Json(unitOfWork.Cargos.GetCargoInfo(trackingNumber));
+
+			}
+			else
+			{
+				return BadRequest();
+			}
 		}
 
 		[Authorize]

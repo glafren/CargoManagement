@@ -1,13 +1,237 @@
 ﻿@{
-    ViewData["Title"] = "Kargo Takip";
+	ViewData["Title"] = "Kargo Takip";
+}
+@section Styles{
+	<style>
+		.cssbuttons-io-button {
+			background: #A370F0;
+			color: white;
+			font-family: inherit;
+			padding: 0.35em;
+			padding-left: 1.2em;
+			font-size: 17px;
+			font-weight: 500;
+			border-radius: 0.9em;
+			border: none;
+			letter-spacing: 0.05em;
+			display: flex;
+			align-items: center;
+			box-shadow: inset 0 0 1.6em -0.6em #714da6;
+			overflow: hidden;
+			position: relative;
+			height: 2.8em;
+			padding-right: 3.3em;
+		}
+
+			.cssbuttons-io-button .icon {
+				background: white;
+				margin-left: 1em;
+				position: absolute;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 2.2em;
+				width: 2.2em;
+				border-radius: 0.7em;
+				box-shadow: 0.1em 0.1em 0.6em 0.2em #7b52b9;
+				right: 0.3em;
+				transition: all 0.3s;
+			}
+
+			.cssbuttons-io-button:hover .icon {
+				width: calc(100% - 0.6em);
+			}
+
+			.cssbuttons-io-button .icon svg {
+				width: 1.1em;
+				transition: transform 0.3s;
+				color: #7b52b9;
+			}
+
+			.cssbuttons-io-button:hover .icon svg {
+				transform: translateX(0.1em);
+			}
+
+			.cssbuttons-io-button:active .icon {
+				transform: scale(0.95);
+			}
+
+	</style>
 }
 
-<div class="card" style="width: 18rem;">
-  <div class="card-header">
-    Kargo Takip 
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Kargo Takip Numarasını giriniz:</li>
-    <li class="list-group-item"><input type="text" class="form-control" /></li>
-  </ul>
+
+<div class="modal" id="modal" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalTitleId">Kargo Bilgileri</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item" role="presentation">
+						<button class="nav-link active" id="sender-tab" data-bs-toggle="tab" data-bs-target="#sender" type="button" role="tab" aria-controls="sender" aria-selected="true">Gönderici</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="recipient-tab" data-bs-toggle="tab" data-bs-target="#recipient" type="button" role="tab" aria-controls="recipient" aria-selected="false">Alıcı</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="cargo-tab" data-bs-toggle="tab" data-bs-target="#cargo" type="button" role="tab" aria-controls="cargo" aria-selected="false">Kargo</button>
+					</li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active" id="sender" role="tabpanel" aria-labelledby="sender-tab">
+						<table class="table">
+							<tbody>
+								<tr>
+									<th scope="row">Adı</th>
+									<td><input type="text" readonly id="txtSenderName" class="form-control-plaintext" value="Gönderici Adı"></td>
+								</tr>
+								<tr>
+									<th scope="row">Soyadı</th>
+									<td><input type="text" readonly id="txtSenderSurname" class="form-control-plaintext" value="Gönderici Soyadı"></td>
+								</tr>
+								<tr>
+									<th scope="row">Telefon</th>
+									<td><input type="text" readonly id="txtSenderPhone" class="form-control-plaintext" value="Gönderici Telefon"></td>
+								</tr>
+								<tr>
+									<th scope="row">Email</th>
+									<td><input type="text" readonly id="txtSenderEmail" class="form-control-plaintext" value="Gönderici Email"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="tab-pane fade" id="recipient" role="tabpanel" aria-labelledby="recipient-tab">
+						<table class="table">
+							<tbody>
+								<tr>
+									<th scope="row">Adı</th>
+									<td><input type="text" readonly id="txtRecipientName" class="form-control-plaintext" value="Alıcı Adı"></td>
+								</tr>
+								<tr>
+									<th scope="row">Soyadı</th>
+									<td><input type="text" readonly id="txtRecipientSurname" class="form-control-plaintext" value="Alıcı Soyadı"></td>
+								</tr>
+								<tr>
+									<th scope="row">Telefon</th>
+									<td><input type="text" readonly id="txtRecipientPhone" class="form-control-plaintext" value="Alıcı Telefon"></td>
+								</tr>
+								<tr>
+									<th scope="row">Email</th>
+									<td><input type="text" readonly id="txtRecipientEmail" class="form-control-plaintext" value="Alıcı Email"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="tab-pane fade" id="cargo" role="tabpanel" aria-labelledby="cargo-tab">
+						<table class="table">
+							<tbody>
+								<tr>
+									<th scope="row">Takip Numarası</th>
+									<td><input type="text" readonly id="txtCargoTrackingNumber" class="form-control-plaintext" value="Kargo Takip Numarası"></td>
+								</tr>
+								<tr>
+									<th scope="row">Durumu</th>
+									<td><input type="text" readonly id="txtCargoState" class="form-control-plaintext" value="Kargo Durumu"></td>
+								</tr>
+								<tr>
+									<th scope="row">Çıkış Tarihi</th>
+									<td><input type="text" readonly id="txtCargoExitDate" class="form-control-plaintext"></td>
+								</tr>
+								<tr>
+									<th scope="row">Teslimat Adresi</th>
+									<td><input type="text" readonly id="txtCargoDeliveryAddress" class="form-control-plaintext" value="Teslimat Adresi"></td>
+								</tr>
+								<tr>
+									<th scope="row">Çıkış Şubesi</th>
+									<td><input type="text" readonly id="txtCargoBranch" class="form-control-plaintext" value="Çıkış Şubesi"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
 </div>
+
+
+<div class="card">
+	<h5 class="card-header">Kargo Takibi</h5>
+	<div class="card-body">
+		<h5 class="card-title">Kargo Takip Numarası</h5>
+		<input class="form-control" id="txtTrackingNumber" placeholder="Kargo Takip Numarasını Giriniz." />
+		<div class="my-2 d-grid gap-2">
+			<button class="btn btn-primary" id="btnSearch" type="button">Sorgula</button>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<button class="cssbuttons-io-button">
+		Giriş Yap
+		<div class="icon">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+				<path fill="none" d="M0 0h24v24H0z"></path>
+				<path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path>
+			</svg>
+		</div>
+	</button>
+</div>
+
+@section Scripts{
+	<script>
+		$(document).ready(function () {
+			$('.cssbuttons-io-button').click(function () {
+				window.location.href = '/User/Login';
+			});
+		});
+
+		$('#btnSearch').click(function () {
+			var trackingNumber = $('#txtTrackingNumber').val();
+			searchCargo(trackingNumber);
+		})
+
+		function searchCargo(trackingNumber) {
+
+			$.ajax({
+				type: 'Post',
+				url: '/Cargo/SearchCargo',
+				data: { trackingNumber: trackingNumber },
+				success: function (res) {
+					if(res != null){
+						$('#txtSenderName').val(res.senderName);
+						$('#txtSenderSurname').val(res.senderSurname);
+						$('#txtSenderEmail').val(res.senderEmail);
+						$('#txtSenderPhone').val(res.senderPhone);
+
+						$('#txtRecipientName').val(res.recipientName);
+						$('#txtRecipientSurname').val(res.recipientSurname);
+						$('#txtRecipientEmail').val(res.recipientEmail);
+						$('#txtRecipientPhone').val(res.recipientPhone);
+
+						$('#txtCargoTrackingNumber').val(res.trackingNumber);
+						$('#txtCargoState').val(res.status.name);
+						$('#txtCargoExitDate').val(res.exitDate);
+						$('#txtCargoDeliveryAddress').val(res.deliveryAddress);
+						$('#txtCargoBranch').val(res.branch.name);
+
+						$('#modal').modal('show');
+					}
+					else
+					{
+						toastr.error('Hatalı kargo takip numarası giridiniz!')
+						$('#txtTrackingNumber').val("");
+					}
+						
+				}
+			});
+		}
+					
+
+	</script>
+}

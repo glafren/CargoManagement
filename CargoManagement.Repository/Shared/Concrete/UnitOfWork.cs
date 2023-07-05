@@ -1,5 +1,7 @@
 ﻿using CargoManagement.Data;
 using CargoManagement.Model;
+using CargoManagement.Repository.Abstract;
+using CargoManagement.Repository.Concrete;
 using CargoManagement.Repository.Shared.Abstract;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,7 @@ namespace CargoManagement.Repository.Shared.Concrete
 	{
 		public IRepository<User> Users { get; private set; }
 
-		public IRepository<Cargo> Cargos {get; private set;}
+		public ICargoRepository Cargos {get; private set;}
 
 		public IRepository<Branch> Branches {get; private set;}
 
@@ -27,7 +29,7 @@ namespace CargoManagement.Repository.Shared.Concrete
 		{
 			_db = db;
 			Users = new Repository<User>(db);
-			Cargos = new Repository<Cargo>(db);
+			Cargos = new CargoRepository(db);
 			Branches = new Repository<Branch>(db);
 			AuthorizationRoles = new Repository<AuthorizationRole>(db);
 			Statuses = new Repository<Status>(db);

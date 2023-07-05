@@ -4,7 +4,6 @@ using System.Diagnostics;
 
 namespace CargoManagement.Web.Controllers
 {
-	[Authorize]
 	public class HomeController : Controller
 	{
 		public IActionResult Index()
