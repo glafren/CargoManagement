@@ -1,6 +1,6 @@
 # Kargo Şirketi Uygulaması
 
-Bu proje, ASP.NET MVC kullanarak geliştirilen bir kargo şirketi uygulamasıdır. Uygulama, kargo girişi, çıkışı ve durumuyla ilgili işlemleri yönetmek için kullanılır. Ayrıca, kullanıcı yetkilendirme sistemi de içerir.
+Bu proje, ASP.NET MVC kullanarak geliştirilen bir kargo şirketi uygulamasıdır. Uygulama, kargo girişi, çıkışı ve durumuyla ilgili işlemleri yönetmek için Repository Pattern ve Unit of Work tasarım desenlerini kullanmaktadır.
 
 ## Özellikler
 
@@ -18,10 +18,15 @@ Bu proje, ASP.NET MVC kullanarak geliştirilen bir kargo şirketi uygulamasıdı
 - HTML, CSS, JavaScript
 - jQuery
 - GitHub
+- Ajax
+- Repository Pattern
+- Unit Of Work
 
 ## Proje Yapısı
 
 - **Models**: Veritabanı tablolarını ve veri yapılarını tanımlayan sınıflar
+- **Repository**: Projede Repository Pattern kullanılarak, kargo verileriyle ilgili işlemler için ayrı Repository sınıfları oluşturulmuştur. Bu sınıflar, veritabanı işlemlerini yönetmek ve kodu daha düzenli hale getirmek için kullanılır.
+- **Unit Of Work**: Projede Unit of Work tasarım desenini kullanarak, Repository sınıflarının birleşik bir iş birimi altında çalışmasını sağlamış ve veritabanı işlemlerini yönetmiş olursunuz.
 - **Controllers**: Uygulama iş mantığını ve yönlendirmeleri içeren kontrolcü sınıflar
 - **Views**: Kullanıcı arayüzünü oluşturan görünüm dosyaları
 - **Migrations**: Entity Framework ile veritabanı migrasyonlarını yönetmek için kullanılan dosyalar
